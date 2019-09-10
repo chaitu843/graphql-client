@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {gql} from 'apollo-boost';
 import { graphql } from 'react-apollo';
+import './BookDetail.css';
 
 const getBookQuery = gql`
-{
-    book(id: $ID){
+query($id: ID!){
+    book(id: $id){
         name
         genre
         author{
@@ -30,10 +31,10 @@ class BookDetail extends Component {
                 {book.author.books.map(book => <li key={book.id}>{book.name}</li>)}
             </ul>
         </div>
-    );
-    else {
-        return  <div className="book-details"> No Book Selected </div>
-    }
+    )
+    else return <div className = "book-details" style={{
+        textAlign: 'center'
+    }}>No Books Selected !</div>;
     }
 }
 
@@ -41,8 +42,8 @@ export default graphql(getBookQuery, {
     options: (props) => {
         return {
             variables: {
-                id: props.bookdId
+                id: props.bookId
             }
         }
     }
-})(BookDetail)
+})(BookDetail);

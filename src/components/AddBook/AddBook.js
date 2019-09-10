@@ -4,6 +4,7 @@ import { graphql, } from 'react-apollo';
 
 import { flowRight as compose } from 'lodash';
 
+import './AddBook.css';
 import {getBooksQuery} from '../BooksList/BooksList';
 const getAuthorsQuery = gql`
     {
@@ -34,6 +35,7 @@ class AddBook extends Component {
     }
 
     clickHandler = (e) => {
+        e.preventDefault();
         this.props.addBook({
             variables: {
                 id: this.state.id,
@@ -79,7 +81,7 @@ class AddBook extends Component {
                 </div>
 
                 <div>
-                    <label>Select Author of the book: </label>
+                    <label>Select Author of the Book: </label>
                     <select value = {this.state.authorId} onChange={(e) => this.setState({
                         authorId: e.target.value
                     })}>
@@ -87,7 +89,7 @@ class AddBook extends Component {
                         {this.props.getAuthors.loading ? <option>Loading...</option> : this.displayAuthors(this.props.getAuthors.authors)}
                     </select>
                 </div>
-                <input type="button" value="Add Book" onClick = {this.clickHandler}/>
+                <button onClick = {this.clickHandler}> + </button>
             </form>
         )
     }
